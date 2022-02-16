@@ -7,8 +7,8 @@ public class Puzzle_script : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    int position;
-    
+    public int position;
+
 
     void Start()
     {
@@ -22,11 +22,17 @@ public class Puzzle_script : MonoBehaviour
 
     }
 
+    public int getPosition()
+    {
+        return position;
+    }
+
     void OnMouseDown()
     {
         position = position % 4 + 1;
-        int angle = (position -1) * 90;
+        int angle = (position - 1) * 90;
         transform.eulerAngles = new Vector3(0, 0, angle);
         Debug.Log("Puzzle rotated");
+        transform.parent.GetComponent<PuzzleVal>().ValidatePuzzle();
     }
 }

@@ -43,7 +43,7 @@ public class EnemySimpleAttack : MonoBehaviour
 
     void RepeatAttemptAttack()
     {
-        GetComponent<Melee>().AttemptAttack(dir, damage, attackRadius, "Player");
+        GetComponent<Melee>().AttemptAttack(dir, damage, "Player");
     }
 }
 

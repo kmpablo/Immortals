@@ -118,11 +118,10 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    maxJobWorkers: 0
-    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1001 &54541892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -833,6 +832,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2600582269326255976, guid: 1ed7376d243e30a46800bcdb92a82660, type: 3}
   m_PrefabInstance: {fileID: 1079773662}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> main
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +917,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1001 &528535982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4040,3 +4042,5 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdbb92f26735f4f41ab53a50b64f8eb4, type: 3}
+=======
+>>>>>>> main

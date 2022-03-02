@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Damageable
   - Weapon
+  - Ground
   layers:
   - Default
   - TransparentFX

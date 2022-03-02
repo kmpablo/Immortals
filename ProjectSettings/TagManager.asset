@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Damageable
+  - Weapon
   - Ground
   layers:
   - Default

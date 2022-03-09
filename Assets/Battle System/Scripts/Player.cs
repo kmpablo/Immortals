@@ -1,0 +1,99 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Player : MonoBehaviour
+{
+    public int maxHealth;
+    public int maxMana;
+    public int currentHealth;
+    public int currentMana;
+
+    public HealthBar healthBar;
+    public ManaBar manaBar;
+
+    public bool battleMode = true; // we can eventually have the movement script inherit this bool to check for current phase
+    public ProjectileBehavior ProjectilePrefab;
+    public Transform LaunchOffset;
+
+    public int projectileCooldown;
+    private Vector2 lookDirection;
+    private float lookAngle;
+
+    void Start()
+    {
+        maxHealth = 1000;
+        healthBar.setMaxHealth(maxHealth);
+        currentHealth = maxHealth;
+        healthBar.setHealth(currentHealth);
+
+        maxMana = 10000;
+        manaBar.setMaxMana(maxMana);
+        currentMana = 0;
+        manaBar.setMana(currentMana);
+
+        projectileCooldown = 0;
+    }
+
+    void Update()
+    {
+        // random tests
+        if (battleMode){
+            spendMana(-1);
+
+            if(projectileCooldown > 0){
+                projectileCooldown--;   
+            }
+
+            if (Keyboard.current[Key.E].wasPressedThisFrame && projectileCooldown == 0 && currentMana >= 1000) {
+                spendMana(1000);
+                projectileCooldown = 300;
+                
+                lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+                Instantiate(ProjectilePrefab, LaunchOffset.position, Quaternion.Euler(0f, 0f, lookAngle));
+            }
+            
+            if(Keyboard.current[Key.W].isPressed) {
+                transform.position = new Vector2(transform.position.x, transform.position.y + Time.deltaTime * 2);
+            }
+            
+            if(Keyboard.current[Key.A].isPressed) {
+                transform.position = new Vector2(transform.position.x - Time.deltaTime * 2, transform.position.y);
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            
+            if(Keyboard.current[Key.D].isPressed) {
+                transform.position = new Vector2(transform.position.x + Time.deltaTime * 2, transform.position.y);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            
+            if(Keyboard.current[Key.S].isPressed) {
+                transform.position = new Vector2(transform.position.x, transform.position.y - Time.deltaTime * 2);
+            }
+        }
+    }
+
+    void takeDamage(int damage){
+        currentHealth -= damage;
+        if(currentHealth < 0){
+            currentHealth = 0;
+        }
+        else if(currentHealth > maxHealth){
+            currentHealth = maxHealth;
+        }
+        healthBar.setHealth(currentHealth);
+    }
+
+    void spendMana(int cost){
+        currentMana -= cost;
+        if(currentMana < 0){
+            currentMana = 0;
+        }
+        else if(currentMana > maxMana){
+            currentMana = maxMana;
+        }
+        manaBar.setMana(currentMana);
+    }
+}

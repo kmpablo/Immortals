@@ -9,11 +9,11 @@ public class EnemySimpleAttack : MonoBehaviour
         Left, 
         Right 
     };
-    public float damage;
+    public int extraDamage;
     public float attackRadius;
     public float attackDelay;
     public GameObject player;
-    public Direction facing; //0 is left, 1 is right
+    public Direction facing;
     private bool alrInsideRadius;
     private Vector2 dir;
     // Start is called before the first frame update
@@ -25,16 +25,17 @@ public class EnemySimpleAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        dir = player.transform.position - transform.position;
         if (!alrInsideRadius && Vector2.Distance(player.transform.position, gameObject.transform.position) <= attackRadius)
         {
-            dir = player.transform.position - transform.position;
             if ((facing == Direction.Left && dir.x < 0) || (facing == Direction.Right && dir.x > 0))
             {
                 InvokeRepeating("RepeatAttemptAttack", 0.5f, attackDelay);
                 alrInsideRadius = true;
             }
         }
-        if (alrInsideRadius && Vector2.Distance(player.transform.position, gameObject.transform.position) > attackRadius)
+        if (alrInsideRadius && (Vector2.Distance(player.transform.position, gameObject.transform.position) > attackRadius
+        || (facing == Direction.Left && dir.x > 0) || (facing == Direction.Right && dir.x < 0)))
         {
             CancelInvoke();
             alrInsideRadius = false;
@@ -43,7 +44,7 @@ public class EnemySimpleAttack : MonoBehaviour
 
     void RepeatAttemptAttack()
     {
-        GetComponent<Melee>().AttemptAttack(dir, damage, "Player");
+        GetComponent<Melee>().AttemptAttack(dir, extraDamage, "Player");
     }
 }
 

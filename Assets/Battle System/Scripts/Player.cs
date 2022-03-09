@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public GameObject playerParent;
+
     public int maxHealth;
     public int maxMana;
     public int currentHealth;
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour
 
         maxMana = 10000;
         manaBar.setMaxMana(maxMana);
-        currentMana = 0;
+        currentMana = maxMana;
         manaBar.setMana(currentMana);
 
         projectileCooldown = 0;
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        playerParent.transform.position = transform.position;
         // random tests
         if (battleMode){
             spendMana(-1);
@@ -47,12 +50,13 @@ public class Player : MonoBehaviour
             }
 
             if (Keyboard.current[Key.E].wasPressedThisFrame && projectileCooldown == 0 && currentMana >= 1000) {
-                spendMana(1000);
+                spendMana(3000);
                 projectileCooldown = 300;
                 
                 lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
                 lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-                Instantiate(ProjectilePrefab, LaunchOffset.position, Quaternion.Euler(0f, 0f, lookAngle));
+                var projectile = Instantiate(ProjectilePrefab, LaunchOffset.position, Quaternion.Euler(0f, 0f, lookAngle));
+                Physics2D.IgnoreCollision(projectile.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             }
             
             if(Keyboard.current[Key.W].isPressed) {
@@ -75,7 +79,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void takeDamage(int damage){
+    public void takeDamage(int damage){
         currentHealth -= damage;
         if(currentHealth < 0){
             currentHealth = 0;
@@ -86,12 +90,22 @@ public class Player : MonoBehaviour
         healthBar.setHealth(currentHealth);
     }
 
-    void spendMana(int cost){
+    public void spendMana(int cost){
         currentMana -= cost;
         if(currentMana < 0){
             currentMana = 0;
         }
         else if(currentMana > maxMana){
+            currentMana = maxMana;
+        }
+        manaBar.setMana(currentMana);
+    }
+
+    public void restoreMana(int amount){
+        if (currentMana + amount <= maxMana)
+        {
+            currentMana += amount;
+        } else {
             currentMana = maxMana;
         }
         manaBar.setMana(currentMana);

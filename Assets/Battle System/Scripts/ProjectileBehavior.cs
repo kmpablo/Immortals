@@ -17,7 +17,7 @@ public class ProjectileBehavior : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.name != "Player"){
+        if(collision.gameObject.tag != "Player" && collision.gameObject.tag != "Weapon"){
             Destroy(gameObject);
             if(collision.gameObject.GetComponent("Enemy") != null && collision.gameObject.GetComponent("Enemy") is Enemy) {
                 (collision.gameObject.GetComponent("Enemy") as Enemy).takeDamage(50);

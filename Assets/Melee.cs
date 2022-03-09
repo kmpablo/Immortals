@@ -5,13 +5,15 @@ using UnityEngine;
 public class Melee : MonoBehaviour
 {
     public GameObject weapon;
+    public int manaCost;
     public bool attackMode;
+    public bool alreadyHit;
     private float cooldown;
 
     void Start()
     {
-        weapon.transform.SetParent(transform);
         attackMode = false;
+        alreadyHit = false;
     }
 
     void Update()
@@ -19,30 +21,39 @@ public class Melee : MonoBehaviour
         if (attackMode)
         {
             cooldown += Time.deltaTime;
-            if (cooldown == 1)
+            if (cooldown > 1)
             {
                 attackMode = false;
             }
         }
     }
-    public void AttemptAttack(Vector2 dir, float damage, string targetTag)
+    public void AttemptAttack(Vector3 dir, int extraDamage, string targetTag)
     {
-        Debug.Log(tag + " attempting attack towards " + dir);
-        weapon.GetComponent<Weapon>().damage = damage;
-        attackMode = true;
-        cooldown = 0;
-        //code to swing weapon in direction dir
-
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, dir);
-        // if (hit.collider != null && hit.collider.gameObject.tag == targetTag)
-        // {
-        //     GameObject target = hit.collider.gameObject;
-        //     Attack(dir, damage, target);
-        // }
+        if (!attackMode)
+        {
+            if (tag == "Player")
+            {
+                if (GetComponent<Player>().currentMana - manaCost >= 0)
+                {
+                    GetComponent<Player>().spendMana(manaCost); //dummy value
+                } else {
+                    return;
+                }
+            }
+            alreadyHit = false;
+            Debug.Log(tag + " attempting attack towards " + dir);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            weapon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            weapon.GetComponent<Weapon>().dest = weapon.GetComponent<Weapon>().start + Vector3.Normalize(dir);
+            weapon.GetComponent<Weapon>().ThrustWeapon();
+            weapon.GetComponent<Weapon>().damage += extraDamage;
+            attackMode = true;
+            cooldown = 0;
+        }
     }
 
 
-    public void Attack(Vector2 dir, float damage, GameObject target)
+    public void Attack(Vector2 dir, int damage, GameObject target)
     {
         if (target.tag == "Damageable")
         {

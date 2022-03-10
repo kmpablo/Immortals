@@ -70,6 +70,10 @@ public class Player_Controller : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (rb.velocity.y < 0)
+            rb.drag = 0;
+        else
+            rb.drag = 2;
         rb.velocity = new Vector2(movX * speed, rb.velocity.y);
     }
 }

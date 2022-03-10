@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Puzzle_script : MonoBehaviour
 {
@@ -12,13 +13,18 @@ public class Puzzle_script : MonoBehaviour
 
     void Start()
     {
-        position = 1;
+        position = Random.Range(1, 4);
+        int angle = (position - 1) * 90;
+        transform.eulerAngles = new Vector3(0, 0, angle);
+        //position = 1;
         Debug.Log("Puzzle initiated");
     }
 
     // Update is called once per frame
     void Update()
     {
+        // if (Input.GetMouseButtonDown(0))
+        //     Debug.Log("Pressed primary button.");
 
     }
 

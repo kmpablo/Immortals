@@ -59,23 +59,23 @@ public class Player : MonoBehaviour
                 Physics2D.IgnoreCollision(projectile.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             }
             
-            if(Keyboard.current[Key.W].isPressed) {
-                transform.position = new Vector2(transform.position.x, transform.position.y + Time.deltaTime * 2);
-            }
+            // if(Keyboard.current[Key.W].isPressed) {
+            //     transform.position = new Vector2(transform.position.x, transform.position.y + Time.deltaTime * 2);
+            // }
             
-            if(Keyboard.current[Key.A].isPressed) {
-                transform.position = new Vector2(transform.position.x - Time.deltaTime * 2, transform.position.y);
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-            }
+            // if(Keyboard.current[Key.A].isPressed) {
+            //     transform.position = new Vector2(transform.position.x - Time.deltaTime * 2, transform.position.y);
+            //     transform.rotation = Quaternion.Euler(0, 180, 0);
+            // }
             
-            if(Keyboard.current[Key.D].isPressed) {
-                transform.position = new Vector2(transform.position.x + Time.deltaTime * 2, transform.position.y);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
+            // if(Keyboard.current[Key.D].isPressed) {
+            //     transform.position = new Vector2(transform.position.x + Time.deltaTime * 2, transform.position.y);
+            //     transform.rotation = Quaternion.Euler(0, 0, 0);
+            // }
             
-            if(Keyboard.current[Key.S].isPressed) {
-                transform.position = new Vector2(transform.position.x, transform.position.y - Time.deltaTime * 2);
-            }
+            // if(Keyboard.current[Key.S].isPressed) {
+            //     transform.position = new Vector2(transform.position.x, transform.position.y - Time.deltaTime * 2);
+            // }
         }
     }
 

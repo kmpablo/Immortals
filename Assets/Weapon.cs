@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
+        Physics2D.IgnoreCollision(user.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         currentlyThrusting = false;
         currentlyThrustingForward = false;
         start = transform.localPosition;

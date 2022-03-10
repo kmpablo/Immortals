@@ -30,12 +30,18 @@ public class Player_Controller : MonoBehaviour
 
     void OnJump()
     {
+        Debug.Log("jump");
         if (isGrounded)
+        {
+            Debug.Log("jump 2");
             rb.AddForce(Vector2.up * jumpForce);
+        }
     }
 
     void OnFall()
     {
+        if (transform.position.y <= 0)
+            return;
         if (isGrounded)
         {
             rb.GetComponent<Collider2D>().isTrigger = true;

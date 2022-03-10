@@ -35,6 +35,7 @@ public class ShapeDrag : MonoBehaviour
 
     void OnMouseDown()
     {
+        Debug.Log("Clicked!");
         isDragged = true;
         offset = GetMousePos() - (Vector2)transform.position;
     }

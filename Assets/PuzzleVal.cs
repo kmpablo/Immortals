@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PuzzleVal : MonoBehaviour
 {
-    private int[] pw = { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-    public int size = 25;
+    //public int[] password = { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    public int size = 16;
     public GameObject[] puzzles;
     bool solved = false;
     //public Puzzle_script[] puzzles;
@@ -27,12 +27,12 @@ public class PuzzleVal : MonoBehaviour
         {
             Puzzle_script attempt = puzzles[i].GetComponent<Puzzle_script>();
 
-            if (attempt.getPosition() != pw[i])
+            if (attempt.getPosition() != 1)
             {
                 completed = false;
-                Debug.Log(i);
-                Debug.Log(pw[i]);
-                Debug.Log(attempt.getPosition());
+                // Debug.Log(i);
+                // Debug.Log(pw[i]);
+                //  Debug.Log(attempt.getPosition());
                 Debug.Log("validation not successful!");
             }
 
@@ -49,6 +49,7 @@ public class PuzzleVal : MonoBehaviour
         if (solved)
         {
             Debug.Log("Open!");
+            transform.parent.GetComponent<Puzzle_Complete>().CompletePuzzle();
             solved = false;
         }
     }

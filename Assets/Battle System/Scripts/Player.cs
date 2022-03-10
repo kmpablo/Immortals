@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public ProjectileBehavior ProjectilePrefab;
     public Transform LaunchOffset;
 
-    public int projectileCooldown;
+    public float projectileCooldown;
     private Vector2 lookDirection;
     private float lookAngle;
 
@@ -43,15 +43,15 @@ public class Player : MonoBehaviour
         playerParent.transform.position = transform.position;
         // random tests
         if (battleMode){
-            spendMana(-1);
+            spendMana((int)(-500 * Time.deltaTime));
 
             if(projectileCooldown > 0){
-                projectileCooldown--;   
+                projectileCooldown -= Time.deltaTime;   
             }
 
-            if (Keyboard.current[Key.E].wasPressedThisFrame && projectileCooldown == 0 && currentMana >= 1000) {
+            if (Keyboard.current[Key.E].wasPressedThisFrame && projectileCooldown <= 0 && currentMana >= 3000) {
                 spendMana(3000);
-                projectileCooldown = 300;
+                projectileCooldown = 1f;
                 
                 lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
                 lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
@@ -81,8 +81,9 @@ public class Player : MonoBehaviour
 
     public void takeDamage(int damage){
         currentHealth -= damage;
-        if(currentHealth < 0){
-            currentHealth = 0;
+        if (currentHealth <= 0){
+            Destroy(playerParent);
+            Destroy(gameObject);
         }
         else if(currentHealth > maxHealth){
             currentHealth = maxHealth;

@@ -20,7 +20,7 @@ public class ProjectileBehavior : MonoBehaviour
         if(collision.gameObject.tag != "Player" && collision.gameObject.tag != "Weapon"){
             Destroy(gameObject);
             if(collision.gameObject.GetComponent("Enemy") != null && collision.gameObject.GetComponent("Enemy") is Enemy) {
-                (collision.gameObject.GetComponent("Enemy") as Enemy).takeDamage(50);
+                (collision.gameObject.GetComponent("Enemy") as Enemy).takeDamage(10);
                 // Debug.Log(collision.gameObject.name);
             }
         }

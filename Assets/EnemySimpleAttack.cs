@@ -25,6 +25,11 @@ public class EnemySimpleAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(player == null)
+        {
+            CancelInvoke();
+            return;
+        }
         dir = player.transform.position - transform.position;
         if (!alrInsideRadius && Vector2.Distance(player.transform.position, gameObject.transform.position) <= attackRadius)
         {

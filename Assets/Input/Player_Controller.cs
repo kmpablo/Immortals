@@ -30,12 +30,18 @@ public class Player_Controller : MonoBehaviour
 
     void OnJump()
     {
+        Debug.Log("jump");
         if (isGrounded)
+        {
+            Debug.Log("jump 2");
             rb.AddForce(Vector2.up * jumpForce);
+        }
     }
 
     void OnFall()
     {
+        if (transform.position.y <= 0)
+            return;
         if (isGrounded)
         {
             rb.GetComponent<Collider2D>().isTrigger = true;
@@ -64,6 +70,17 @@ public class Player_Controller : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (rb.velocity.y < 0)
+            rb.drag = 0;
+        else
+            rb.drag = 2;
         rb.velocity = new Vector2(movX * speed, rb.velocity.y);
+        if (rb.velocity.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        } else if (rb.velocity.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 }

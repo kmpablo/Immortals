@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    public float damage;
+    public int damage;
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnCollisionStay2D(Collision2D other)
@@ -23,7 +22,8 @@ public class Hitbox : MonoBehaviour
         ContactPoint2D contactPoint = other.GetContact(0);
         Vector2 pt = contactPoint.point;
         
-        if (other.gameObject.tag == "Weapon" && other.gameObject.transform.parent.GetComponent<Melee>().attackMode)
+        if (other.gameObject.tag == "Weapon" && other.gameObject.GetComponent<Weapon>().user.GetComponent<Melee>().attackMode
+        && !other.gameObject.GetComponent<Weapon>().user.GetComponent<Melee>().alreadyHit)
         {
             damage = other.gameObject.GetComponent<Weapon>().damage;
             Vector2 userPos = other.gameObject.GetComponent<Weapon>().user.transform.position;
@@ -32,15 +32,15 @@ public class Hitbox : MonoBehaviour
             {
                 if (tag == "Player")
                 {
-                    //GetComponent<Player>().takeDamage(damage);
+                    GetComponent<Player>().takeDamage(damage);
                     Debug.Log("Player just took " + damage + " damage from " + other.gameObject.tag);
-                    other.gameObject.transform.parent.GetComponent<Melee>().attackMode = false;
+                    other.gameObject.GetComponent<Weapon>().user.GetComponent<Melee>().alreadyHit = true;
 
                 } else if (tag == "Damageable")
                 {
-                    //GetComponent<Enemy>().takeDamage();
+                    GetComponent<Enemy>().takeDamage(damage);
                     Debug.Log("Enemy just took " + damage + " damage from " + other.gameObject.tag);
-                    other.gameObject.transform.parent.GetComponent<Melee>().attackMode = false;
+                    other.gameObject.GetComponent<Weapon>().user.GetComponent<Melee>().alreadyHit = true;
                 }
             }
         }
